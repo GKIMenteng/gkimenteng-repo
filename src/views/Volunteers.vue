@@ -23,19 +23,24 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div v-for="(volunteer, index) in filteredVolunteers" :key="volunteer.id" class="col-md-3 mb-4">
-                                    <div class="card h-100 text-center volunteer-card" :style="{ animationDelay: index * 0.1 + 's' }">
-                                        <div class="card-body">
-                                            <div class="volunteer-avatar-wrapper">
-                                                <img :src="volunteer.avatar" class="rounded-circle mb-3"
-                                                    :alt="volunteer.name">
+                                <div v-if="filteredVolunteers.length > 0">
+                                    <div v-for="(volunteer, index) in filteredVolunteers" :key="volunteer.id" class="col-md-3 mb-4">
+                                        <div class="card h-100 text-center volunteer-card" :style="{ animationDelay: index * 0.1 + 's' }">
+                                            <div class="card-body">
+                                                <div class="volunteer-avatar-wrapper">
+                                                    <img :src="volunteer.avatar" class="rounded-circle mb-3"
+                                                        :alt="volunteer.name">
+                                                </div>
+                                                <h5 class="card-title">{{ volunteer.name }}</h5>
+                                                <p class="text-primary mb-1"><i class="bi bi-person-badge"></i> {{ volunteer.role }}</p>
+                                                <p class="text-muted mb-1"><i class="bi bi-clock"></i> {{ volunteer.service }}</p>
+                                                <p class="text-muted small mb-0"><i class="bi bi-envelope"></i> {{ volunteer.contact }}</p>
                                             </div>
-                                            <h5 class="card-title">{{ volunteer.name }}</h5>
-                                            <p class="text-primary mb-1"><i class="bi bi-person-badge"></i> {{ volunteer.role }}</p>
-                                            <p class="text-muted mb-1"><i class="bi bi-clock"></i> {{ volunteer.service }}</p>
-                                            <p class="text-muted small mb-0"><i class="bi bi-envelope"></i> {{ volunteer.contact }}</p>
                                         </div>
                                     </div>
+                                </div>
+                                <div v-else class="col-12">
+                                    <p class="text-muted text-center mb-0">No volunteers registered yet.</p>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +87,13 @@
                                         <option value="Second Service">Second Service (10:00 AM)</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-success w-100 shine-effect">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="bi bi-image"></i> Avatar URL (optional)</label>
+                                    <input type="url" v-model="form.avatar" class="form-control"
+                                        placeholder="https://example.com/avatar.jpg">
+                                </div>
+                                <button type="submit" class="btn btn-success w-100 shine-effect" :disabled="isSubmitting">
+                                    <span v-if="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
                                     <i class="bi bi-send"></i> Register as Volunteer
                                 </button>
                             </form>
@@ -104,12 +115,14 @@ import { useChurchStore } from '../stores/church'
 const store = useChurchStore()
 const currentFilter = ref('all')
 const showSuccess = ref(false)
+const isSubmitting = ref(false)
 
 const form = ref({
     name: '',
     email: '',
     role: '',
-    service: ''
+    service: '',
+    avatar: 'https://randomuser.me/api/portraits/lego/1.jpg'
 })
 
 const filteredVolunteers = computed(() => {
@@ -127,12 +140,17 @@ const showAll = () => {
     currentFilter.value = 'all'
 }
 
-const submitVolunteer = () => {
-    showSuccess.value = true
-    form.value = { name: '', email: '', role: '', service: '' }
-    setTimeout(() => {
-        showSuccess.value = false
-    }, 3000)
+const submitVolunteer = async () => {
+    isSubmitting.value = true
+    const result = await store.addVolunteer({ ...form.value })
+    if (result.success) {
+        showSuccess.value = true
+        form.value = { name: '', email: '', role: '', service: '', avatar: 'https://randomuser.me/api/portraits/lego/1.jpg' }
+        setTimeout(() => {
+            showSuccess.value = false
+        }, 3000)
+    }
+    isSubmitting.value = false
 }
 </script>
 

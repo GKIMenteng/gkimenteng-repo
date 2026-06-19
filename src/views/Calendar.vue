@@ -49,7 +49,7 @@
                     <!-- Upcoming Events List -->
                     <div class="mt-4">
                         <h5 class="mb-3" style="color: var(--deep-purple);"><i class="bi bi-book"></i> Upcoming Events</h5>
-                        <div class="row">
+                        <div v-if="monthEvents.length > 0" class="row">
                             <div v-for="event in monthEvents" :key="event.id" class="col-md-6 mb-3">
                                 <div class="card bg-light h-100 shine-effect">
                                     <div class="card-body">
@@ -62,6 +62,7 @@
                                 </div>
                             </div>
                         </div>
+                        <p v-else class="text-muted">No events scheduled for this month.</p>
                     </div>
                 </div>
             </div>

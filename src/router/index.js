@@ -5,6 +5,7 @@ import Auth from '../views/Auth.vue'
 import Calendar from '../views/Calendar.vue'
 import Volunteers from '../views/Volunteers.vue'
 import About from '../views/About.vue'
+import AdminDashboard from '../views/AdminDashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,8 +39,18 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminDashboard,
+      meta: { requiresAdmin: true }
     }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  next()
 })
 
 export default router

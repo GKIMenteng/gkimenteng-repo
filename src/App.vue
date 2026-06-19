@@ -36,6 +36,11 @@
                 <i class="bi bi-info-circle"></i> About
               </router-link>
             </li>
+            <li class="nav-item" v-if="authStore.profile?.role === 'admin'">
+              <router-link class="nav-link" to="/admin">
+                <i class="bi bi-shield-fill-check"></i> Admin
+              </router-link>
+            </li>
             <li class="nav-item">
               <router-link class="nav-link" to="/auth">
                 <i class="bi bi-shield-lock"></i> Login/Register
