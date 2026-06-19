@@ -17,6 +17,11 @@
               </router-link>
             </li>
             <li class="nav-item">
+              <router-link class="nav-link" to="/news">
+                <i class="bi bi-newspaper"></i> News
+              </router-link>
+            </li>
+            <li class="nav-item">
               <router-link class="nav-link" to="/calendar">
                 <i class="bi bi-calendar3"></i> Calendar
               </router-link>
@@ -30,6 +35,16 @@
               <router-link class="nav-link" to="/about">
                 <i class="bi bi-info-circle"></i> About
               </router-link>
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" to="/auth">
+                <i class="bi bi-shield-lock"></i> Login/Register
+              </router-link>
+            </li>
+            <li class="nav-item" v-if="authStore.isAuthenticated">
+              <button @click="authStore.logout" class="btn btn-outline-light btn-sm nav-link shine-effect">
+                <i class="bi bi-box-arrow-right"></i> Logout
+              </button>
             </li>
           </ul>
         </div>
@@ -47,6 +62,9 @@
 
 <script setup>
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import { useAuthStore } from './stores/auth'
+
+const authStore = useAuthStore()
 </script>
 
 <style scoped>

@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Dashboard from '../views/Dashboard.vue'
+import News from '../views/News.vue'
+import Auth from '../views/Auth.vue'
 import Calendar from '../views/Calendar.vue'
 import Volunteers from '../views/Volunteers.vue'
 import About from '../views/About.vue'
@@ -11,6 +13,16 @@ const router = createRouter({
       path: '/',
       name: 'dashboard',
       component: Dashboard
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: News
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: Auth
     },
     {
       path: '/calendar',

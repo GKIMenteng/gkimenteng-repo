@@ -59,7 +59,10 @@
                 <div class="col-12">
                     <div class="card shadow shine-effect animated-card">
                         <div class="card-header bg-primary text-white">
-                            <h5 class="mb-0"><i class="bi bi-newspaper"></i> Church News</h5>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><i class="bi bi-newspaper"></i> Church News</h5>
+                                <router-link to="/news" class="btn btn-light btn-sm shine-effect">View All News</router-link>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
