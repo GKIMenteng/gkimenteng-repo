@@ -66,26 +66,26 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div v-if="store.news.length > 0">
-                                    <div v-for="(item, index) in store.news" :key="item.id" class="col-md-4 mb-3"
-                                        :style="{ animationDelay: index * 0.1 + 's' }">
-                                        <div class="card h-100 animated-card">
-                                            <div class="position-relative overflow-hidden">
-                                                <img :src="item.image" class="card-img-top" :alt="item.title"
-                                                    style="height: 200px; object-fit: cover;">
-                                                <div class="news-overlay">
-                                                    <i class="bi bi-book"></i>
+                                    <div v-if="store.sanitizedNews.length > 0">
+                                        <div v-for="(item, index) in store.sanitizedNews" :key="item.id" class="col-md-4 mb-3"
+                                            :style="{ animationDelay: index * 0.1 + 's' }">
+                                            <div class="card h-100 animated-card">
+                                                <div class="position-relative overflow-hidden">
+                                                    <img :src="item.image" class="card-img-top" :alt="item.title"
+                                                        style="height: 200px; object-fit: cover;">
+                                                    <div class="news-overlay">
+                                                        <i class="bi bi-book"></i>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <h5 class="card-title">{{ item.title }}</h5>
-                                                <p class="card-text text-muted small"><i class="bi bi-calendar"></i> {{
-                                                    formatDate(item.date) }}</p>
-                                                <p class="card-text">{{ item.content }}</p>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{ item.title }}</h5>
+                                                    <p class="card-text text-muted small"><i class="bi bi-calendar"></i> {{
+                                                        formatDate(item.date) }}</p>
+                                                    <p class="card-text" v-html="item.content"></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 <div v-else class="col-12">
                                     <p class="text-muted text-center mb-0">No news available. Check back soon!</p>
                                 </div>

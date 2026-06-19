@@ -33,7 +33,7 @@
                                                     <i class="bi bi-calendar text-warning"></i> {{ formatDate(item.date) }}
                                                 </p>
                                                 <h5 class="card-title">{{ item.title }}</h5>
-                                                <p class="card-text text-muted">{{ item.content }}</p>
+                                                <p class="card-text text-muted" v-html="item.content"></p>
                                             </div>
                                             <div class="card-footer bg-transparent border-0">
                                                 <button class="btn btn-outline-primary w-100 shine-effect" disabled>
@@ -64,7 +64,7 @@ import { useChurchStore } from '../stores/church'
 const store = useChurchStore()
 
 const sortedNews = computed(() => {
-    return [...store.news].sort((a, b) => new Date(b.date) - new Date(a.date))
+    return [...store.sanitizedNews].sort((a, b) => new Date(b.date) - new Date(a.date))
 })
 
 const formatDate = (dateString) => {

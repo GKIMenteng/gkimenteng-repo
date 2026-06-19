@@ -16,6 +16,35 @@ export const useChurchStore = defineStore('church', () => {
   const currentReflectionIndex = ref(0)
   const isLoading = ref(false)
 
+  const sanitizeHTML = (html) => {
+      if (!html) return ''
+      let result = html
+          .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+          .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+          .replace(/\son\w+="[^"]*"/gi, '')
+          .replace(/\son\w+='[^']*'/gi, '')
+
+      const allowed = new Set(['b', 'i', 'em', 'strong', 'ul', 'ol', 'li', 'p', 'br', 'span'])
+
+      result = result.replace(/<\/?(\w+)(\s[^>]*)?>/gi, (match, tag) => {
+          const lower = tag.toLowerCase()
+          if (lower === 'br') return match
+          if (!allowed.has(lower)) return ''
+          return match
+      })
+
+      result = result.replace(/\s+>/g, '>')
+
+      return result
+  }
+
+  const sanitizedNews = computed(() => {
+      return news.value.map(item => ({
+          ...item,
+          content: sanitizeHTML(item.content)
+      }))
+  })
+
   const initializeData = async () => {
     isLoading.value = true
     try {
@@ -142,6 +171,7 @@ export const useChurchStore = defineStore('church', () => {
 
   return {
     news,
+    sanitizedNews,
     reflections,
     events,
     volunteers,

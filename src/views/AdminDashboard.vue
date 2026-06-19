@@ -220,8 +220,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label"><i class="bi bi-text-paragraph"></i> Content</label>
-                                                <textarea v-model="newsForm.content" class="form-control" rows="4"
-                                                    required></textarea>
+                                                <RichTextEditor v-model="newsForm.content" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label"><i class="bi bi-image"></i> Image URL</label>
@@ -277,6 +276,7 @@
 import { ref } from 'vue'
 import { useChurchStore } from '../stores/church'
 import { useAuthStore } from '../stores/auth'
+import RichTextEditor from '../components/RichTextEditor.vue'
 
 const store = useChurchStore()
 const authStore = useAuthStore()
